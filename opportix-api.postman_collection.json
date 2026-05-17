@@ -1,0 +1,517 @@
+{
+  "info": {
+    "name": "Opportix API",
+    "description": "Complete API collection for Opportix Job Portal. Base URL: http://localhost:5000 (dev) or https://opportix-backend.vercel.app (prod)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{auth_token}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000" },
+    { "key": "auth_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/", "host": ["{{base_url}}"], "path": [""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Secure@123\",\n  \"fullname\": \"John Doe\",\n  \"username\": \"johndoe\",\n  \"phone\": \"+92-300-1234567\",\n  \"role\": \"applicant\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/signup", "host": ["{{base_url}}"], "path": ["api", "auth", "signup"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Secure@123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api", "auth", "me"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{base_url}}/api/auth/logout", "host": ["{{base_url}}"], "path": ["api", "auth", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List All Users",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users", "host": ["{{base_url}}"], "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be"] }
+          }
+        },
+        {
+          "name": "Get Jobs Posted by User (Employer)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be/jobs", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be", "jobs"] }
+          }
+        },
+        {
+          "name": "Get Applications by User (Applicant)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be/applications", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be", "applications"] }
+          }
+        },
+        {
+          "name": "Get Applicants for Employer's Jobs",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be/applicants", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be", "applicants"] }
+          }
+        },
+        {
+          "name": "Get Testimonials by User",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be/testimonials", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be", "testimonials"] }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"custom-user-id\",\n  \"fullname\": \"Jane Smith\",\n  \"username\": \"janesmith\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"+92-300-7654321\",\n  \"password\": \"Jane@123\",\n  \"role\": \"employer\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/users", "host": ["{{base_url}}"], "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Updated Name\",\n  \"phone\": \"+92-300-1112223\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be"] }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/users/6778eb34de1be", "host": ["{{base_url}}"], "path": ["api", "users", "6778eb34de1be"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "List All Categories",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/categories", "host": ["{{base_url}}"], "path": ["api", "categories"] }
+          }
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/categories/1", "host": ["{{base_url}}"], "path": ["api", "categories", "1"] }
+          }
+        },
+        {
+          "name": "Get Jobs by Category",
+          "description": "Fetch jobs for a specific category with optional filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/categories/1/jobs?status=active&type=remote",
+              "host": ["{{base_url}}"],
+              "path": ["api", "categories", "1", "jobs"],
+              "query": [
+                { "key": "status", "value": "active" },
+                { "key": "type", "value": "remote" },
+                { "key": "duration", "value": "full_time", "disabled": true },
+                { "key": "experience", "value": "mid_level", "disabled": true },
+                { "key": "search", "value": "developer", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Artificial Intelligence\",\n  \"numberOfJobs\": 0\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/categories", "host": ["{{base_url}}"], "path": ["api", "categories"] }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"AI & Machine Learning\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/categories/1", "host": ["{{base_url}}"], "path": ["api", "categories", "1"] }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/categories/9", "host": ["{{base_url}}"], "path": ["api", "categories", "9"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "List All Jobs",
+          "description": "List jobs with optional filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/jobs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "jobs"],
+              "query": [
+                { "key": "category", "value": "1", "disabled": true },
+                { "key": "status", "value": "active", "disabled": true },
+                { "key": "type", "value": "remote", "disabled": true },
+                { "key": "duration", "value": "full_time", "disabled": true },
+                { "key": "experience", "value": "mid_level", "disabled": true },
+                { "key": "search", "value": "developer", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Jobs",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/jobs?search=engineer",
+              "host": ["{{base_url}}"],
+              "path": ["api", "jobs"],
+              "query": [{ "key": "search", "value": "engineer" }]
+            }
+          }
+        },
+        {
+          "name": "Filter Jobs by Type & Duration",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/jobs?type=remote&duration=full_time&status=active",
+              "host": ["{{base_url}}"],
+              "path": ["api", "jobs"],
+              "query": [
+                { "key": "type", "value": "remote" },
+                { "key": "duration", "value": "full_time" },
+                { "key": "status", "value": "active" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Job by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/jobs/1", "host": ["{{base_url}}"], "path": ["api", "jobs", "1"] }
+          }
+        },
+        {
+          "name": "Create Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postedBy\": \"6778eb34de1be\",\n  \"category\": 1,\n  \"title\": \"Senior Node.js Developer\",\n  \"companyName\": \"Tech Corp\",\n  \"location\": \"Islamabad, Pakistan\",\n  \"salaryRange\": \"$80k-$120k\",\n  \"duration\": \"full_time\",\n  \"type\": \"remote\",\n  \"skills\": \"Node.js, Express, PostgreSQL, React\",\n  \"description\": \"We are looking for a Senior Node.js Developer to join our engineering team.\",\n  \"requirements\": \"5+ years experience with Node.js, Strong SQL skills, Experience with cloud services\",\n  \"department\": \"Engineering\",\n  \"experience\": \"senior_level\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/jobs", "host": ["{{base_url}}"], "path": ["api", "jobs"] }
+          }
+        },
+        {
+          "name": "Update Job",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Job Title\",\n  \"status\": \"closed\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/jobs/1", "host": ["{{base_url}}"], "path": ["api", "jobs", "1"] }
+          }
+        },
+        {
+          "name": "Delete Job",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/jobs/81", "host": ["{{base_url}}"], "path": ["api", "jobs", "81"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Applicants",
+      "item": [
+        {
+          "name": "List All Applicants",
+          "description": "List applicants with optional filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/applicants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "applicants"],
+              "query": [
+                { "key": "status", "value": "new", "disabled": true },
+                { "key": "jobId", "value": "1", "disabled": true },
+                { "key": "userId", "value": "6778eb34de1be", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/applicants?status=shortlisted",
+              "host": ["{{base_url}}"],
+              "path": ["api", "applicants"],
+              "query": [{ "key": "status", "value": "shortlisted" }]
+            }
+          }
+        },
+        {
+          "name": "Filter by Job",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/applicants?jobId=3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "applicants"],
+              "query": [{ "key": "jobId", "value": "3" }]
+            }
+          }
+        },
+        {
+          "name": "Get Applicant by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/applicants/1", "host": ["{{base_url}}"], "path": ["api", "applicants", "1"] }
+          }
+        },
+        {
+          "name": "Create Application",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"6778eb34de1be\",\n  \"jobId\": 1,\n  \"cv\": \"https://example.com/cv.pdf\",\n  \"experience\": 3,\n  \"coverLetter\": \"I am very interested in this position and believe my skills match the requirements.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/applicants", "host": ["{{base_url}}"], "path": ["api", "applicants"] }
+          }
+        },
+        {
+          "name": "Update Application Status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shortlisted\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/applicants/1", "host": ["{{base_url}}"], "path": ["api", "applicants", "1"] }
+          }
+        },
+        {
+          "name": "Delete Application",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/applicants/21", "host": ["{{base_url}}"], "path": ["api", "applicants", "21"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Testimonials",
+      "item": [
+        {
+          "name": "List All Testimonials",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/testimonials", "host": ["{{base_url}}"], "path": ["api", "testimonials"] }
+          }
+        },
+        {
+          "name": "Get Testimonial by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/testimonials/1", "host": ["{{base_url}}"], "path": ["api", "testimonials", "1"] }
+          }
+        },
+        {
+          "name": "Create Testimonial",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"6778eb34de1be\",\n  \"review\": \"This platform helped me find my dream job! Highly recommended.\",\n  \"name\": \"Ali Khan\",\n  \"occupation\": \"Software Engineer\",\n  \"image\": \"https://example.com/avatar.jpg\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/testimonials", "host": ["{{base_url}}"], "path": ["api", "testimonials"] }
+          }
+        },
+        {
+          "name": "Update Testimonial",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"review\": \"Updated review text.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/testimonials/1", "host": ["{{base_url}}"], "path": ["api", "testimonials", "1"] }
+          }
+        },
+        {
+          "name": "Delete Testimonial",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/testimonials/11", "host": ["{{base_url}}"], "path": ["api", "testimonials", "11"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Featured Jobs",
+      "item": [
+        {
+          "name": "List All Featured Jobs",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/featured-jobs", "host": ["{{base_url}}"], "path": ["api", "featured-jobs"] }
+          }
+        },
+        {
+          "name": "Get Featured Job by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/featured-jobs/1", "host": ["{{base_url}}"], "path": ["api", "featured-jobs", "1"] }
+          }
+        },
+        {
+          "name": "Add Job to Featured",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobId\": 1\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/featured-jobs", "host": ["{{base_url}}"], "path": ["api", "featured-jobs"] }
+          }
+        },
+        {
+          "name": "Remove from Featured",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/featured-jobs/11", "host": ["{{base_url}}"], "path": ["api", "featured-jobs", "11"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/admin/stats", "host": ["{{base_url}}"], "path": ["api", "admin", "stats"] }
+          }
+        },
+        {
+          "name": "All Users (Admin View)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/admin/users", "host": ["{{base_url}}"], "path": ["api", "admin", "users"] }
+          }
+        },
+        {
+          "name": "All Jobs (Admin View)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/admin/jobs", "host": ["{{base_url}}"], "path": ["api", "admin", "jobs"] }
+          }
+        },
+        {
+          "name": "All Applicants (Admin View)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/admin/applicants", "host": ["{{base_url}}"], "path": ["api", "admin", "applicants"] }
+          }
+        }
+      ]
+    }
+  ]
+}
