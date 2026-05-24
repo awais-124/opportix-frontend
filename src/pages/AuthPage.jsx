@@ -1,38 +1,45 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { loginSchema } from "../lib/auth.schema.js";
+import { ApiError } from "../lib/api.js";
+import PasswordField from "../components/auth/PasswordField.jsx";
 
 export default function AuthPage() {
-  const { signUp, signIn, signOut, user, loading } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
-  const [form, setForm] = useState({
-    email: "", password: "", fullname: "", username: "", phone: "", role: "applicant",
-  });
-  const [error, setError] = useState("");
+  const { signIn, user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  function handleChange(e) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
+  async function onSubmit(data) {
+    setServerError("");
     setSubmitting(true);
     try {
-      const result = isLogin
-        ? await signIn({ email: form.email, password: form.password })
-        : await signUp(form);
-      if (!result.success) setError(result.error || "Something went wrong");
-    } catch {
-      setError("Network error. Make sure the server is running.");
+      await signIn({ email: data.email, password: data.password });
+      navigate("/dashboard", { replace: true });
+    } catch (err) {
+      if (err instanceof ApiError) {
+        if (err.status === 401) setServerError("Invalid email or password.");
+        else setServerError(err.message || "Something went wrong.");
+      } else {
+        setServerError("Connection error. Make sure the server is running.");
+      }
     } finally {
       setSubmitting(false);
     }
   }
 
-  if (loading) {
+  if (authLoading) {
     return (
       <div className="auth-page">
+        <img src="/assets/images/login-background.png" alt="" className="auth-bg-image" />
         <div className="auth-card"><p>Loading...</p></div>
       </div>
     );
@@ -41,21 +48,19 @@ export default function AuthPage() {
   if (user) {
     return (
       <div className="auth-page">
+        <img src="/assets/images/login-background.png" alt="" className="auth-bg-image" />
         <div className="auth-card">
-          <div className="auth-header">
-            <div className="auth-logo">Opportix</div>
-            <p>Welcome back, <strong>{user.fullname}</strong>!</p>
-            <p className="auth-role">You are signed in as <strong>{user.role}</strong></p>
-          </div>
+          <h3>Welcome back</h3>
+          <p>Signed in as <strong>{user.fullname}</strong> ({user.role})</p>
           <div className="auth-divider" />
           <div className="auth-info">
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Username:</strong> {user.username}</p>
             <p><strong>Phone:</strong> {user.phone}</p>
           </div>
-          <button className="auth-btn auth-btn-danger" onClick={signOut}>
-            Sign Out
-          </button>
+          <Link to="/dashboard" className="auth-btn" style={{ textAlign: "center", textDecoration: "none", margin: 0 }}>
+            Go to Dashboard
+          </Link>
         </div>
       </div>
     );
@@ -63,83 +68,40 @@ export default function AuthPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-header">
-          <div className="auth-logo">Opportix</div>
-          <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
-          <p>{isLogin ? "Sign in to continue" : "Sign up to get started"}</p>
-        </div>
+      <img src="/assets/images/login-background.png" alt="" className="auth-bg-image" />
 
-        <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <>
-              <div className="auth-row">
-                <div className="auth-field">
-                  <label>Full Name</label>
-                  <input name="fullname" value={form.fullname} onChange={handleChange} required placeholder="John Doe" />
-                </div>
-                <div className="auth-field">
-                  <label>Username</label>
-                  <input name="username" value={form.username} onChange={handleChange} required placeholder="johndoe" />
-                </div>
-              </div>
-              <div className="auth-field">
-                <label>Phone</label>
-                <input name="phone" value={form.phone} onChange={handleChange} required placeholder="+92-300-1234567" />
-              </div>
-            </>
-          )}
+      <form className="auth-card" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <h3>Welcome Back</h3>
 
-          <div className="auth-field">
-            <label>Email</label>
-            <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="john@example.com" />
+        <div className="form-fields">
+          <div className="input-group">
+            <input id="email" type="email" placeholder=" " disabled={submitting} className={errors.email ? "input-error" : ""} {...register("email")} />
+            <label htmlFor="email">Email</label>
+            {errors.email && <span className="field-error">{errors.email.message}</span>}
           </div>
 
-          <div className="auth-field">
-            <label>Password</label>
-            <input type="password" name="password" value={form.password} onChange={handleChange} required placeholder="••••••••" minLength={6} />
+          <PasswordField label="Password" name="password" register={register} error={errors.password?.message} disabled={submitting} />
+
+          <div className="auth-forgot">
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          {!isLogin && (
-            <div className="auth-field">
-              <label>I want to</label>
-              <div className="auth-role-toggle">
-                <button
-                  type="button"
-                  className={`auth-role-btn ${form.role === "applicant" ? "active" : ""}`}
-                  onClick={() => setForm((p) => ({ ...p, role: "applicant" }))}
-                >
-                  <span className="role-icon">🔍</span>
-                  Find a Job
-                </button>
-                <button
-                  type="button"
-                  className={`auth-role-btn ${form.role === "employer" ? "active" : ""}`}
-                  onClick={() => setForm((p) => ({ ...p, role: "employer" }))}
-                >
-                  <span className="role-icon">🏢</span>
-                  Hire Talent
-                </button>
-              </div>
-            </div>
-          )}
-
-          {error && <div className="auth-error">{error}</div>}
+          {serverError && <div className="auth-error">{serverError}</div>}
 
           <button type="submit" className="auth-btn" disabled={submitting}>
-            {submitting ? "Please wait..." : isLogin ? "Sign In" : "Create Account"}
+            {submitting ? "Please wait..." : "Login"}
           </button>
-        </form>
-
-        <div className="auth-footer">
-          <p>
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <button type="button" className="auth-link" onClick={() => { setIsLogin(!isLogin); setError(""); }}>
-              {isLogin ? "Sign Up" : "Sign In"}
-            </button>
-          </p>
         </div>
-      </div>
+
+        <div className="bottom-line">
+          <p>Don't have an account?</p>
+          <Link to="/register">Create Now!</Link>
+        </div>
+      </form>
+
+      <Link to="/admin" className="top-right-btn" style={{ textDecoration: "none", display: "inline-block" }}>
+        ADMIN LOGIN
+      </Link>
     </div>
   );
 }

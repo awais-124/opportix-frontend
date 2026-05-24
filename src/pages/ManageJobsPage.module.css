@@ -1,0 +1,381 @@
+.page {
+  max-width: 1100px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.postBtn {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.postBtn:hover {
+  background: var(--primary-hover);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.tab {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabActive {
+  background: var(--primary);
+  color: white;
+}
+
+.table {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 80px 80px 100px 1fr;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 80px 80px 100px 1fr;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  font-size: 13px;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: #f8fafc;
+}
+
+.jobLink {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.jobLink:hover {
+  color: var(--primary);
+}
+
+.colTitle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.colCategory {
+  color: var(--text-secondary);
+}
+
+.colApplicants {
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.colStatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.colDate {
+  color: var(--text-secondary);
+}
+
+.colActions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.statusActive {
+  background: #10b981;
+}
+
+.statusClosed {
+  background: var(--text-secondary);
+}
+
+.actionLink {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.actionLink:hover {
+  background: var(--primary-light);
+}
+
+.actionBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background: #f1f5f9;
+  color: var(--text);
+}
+
+.actionDelete {
+  color: var(--danger);
+}
+
+.actionDelete:hover {
+  background: #fef2f2;
+  color: var(--danger);
+}
+
+.actionError {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: var(--danger);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: var(--danger);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.empty h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.empty p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.emptyCta {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.emptyCta:hover {
+  background: var(--primary-hover);
+}
+
+/* Confirm modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 28px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.modal h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.modal p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.modalCancel {
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modalCancel:hover {
+  background: #f8fafc;
+}
+
+.modalConfirm {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modalConfirm:hover {
+  background: var(--danger-hover);
+}
+
+/* Skeleton */
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonRow {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skel {
+  background: linear-gradient(90deg, var(--border) 25%, #f1f5f9 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+.skelJobTitle {
+  width: 50%;
+  height: 16px;
+}
+
+.skelJobMeta {
+  width: 30%;
+  height: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (max-width: 768px) {
+  .tableHeader {
+    display: none;
+  }
+
+  .tableRow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

@@ -1,0 +1,83 @@
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardBody {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.title {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.trend {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--border) 25%, #f1f5f9 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+.skelIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.skelValue {
+  width: 56px;
+  height: 26px;
+  margin-bottom: 4px;
+}
+
+.skelTitle {
+  width: 80px;
+  height: 14px;
+}
+
+.skelTrend {
+  width: 100px;
+  height: 14px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
