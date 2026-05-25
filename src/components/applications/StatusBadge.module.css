@@ -1,0 +1,29 @@
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.new {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.reviewed {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.shortlisted {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.rejected {
+  background: #fef2f2;
+  color: #dc2626;
+}
