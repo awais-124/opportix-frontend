@@ -4,25 +4,57 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../lib/api.js";
 import styles from "./JobDetailPage.module.css";
 
-const TYPE_LABELS = {
+export const TYPE_LABELS = {
   remote: "Remote",
   onsite: "On-site",
   hybrid: "Hybrid",
 };
 
-const DURATION_LABELS = {
-  "full-time": "Full-time",
-  "part-time": "Part-time",
+export const DURATION_LABELS = {
+  full_time: "Full time",
+  part_time: "Part time",
+  Full_time: "Full time",
+  Part_time: "Part time",
   contract: "Contract",
   internship: "Internship",
 };
 
-const EXP_LABELS = {
-  entry: "Entry Level",
-  mid: "Mid-level",
-  senior: "Senior",
-  expert: "Expert",
+export const EXP_LABELS = {
+  entry_level: "Entry Level",
+  mid_level: "Mid level",
+  senior_level: "Senior level",
+  expert_level: "Expert level",
+  Entry_level: "Entry Level",
+  Mid_level: "Mid level",
+  Senior_level: "Senior level",
+  Expert_level: "Expert level",
 };
+
+export function getExperienceYears(level) {
+  const normalized = String(level || "").toLowerCase();
+  switch (normalized) {
+    case "entry_level":
+    case "entry":
+      return "0-2 years";
+    case "mid_level":
+    case "mid":
+      return "2-5 years";
+    case "senior_level":
+    case "senior":
+      return "5-8 years";
+    case "expert_level":
+    case "expert":
+      return "8+ years";
+    default:
+      return "";
+  }
+}
+
+export function formatExperience(level) {
+  const label = EXP_LABELS[level] || level;
+  const years = getExperienceYears(level);
+  return years ? `${label} (${years})` : label;
+}
 
 export default function JobDetailPage() {
   const { id } = useParams();
@@ -68,15 +100,23 @@ export default function JobDetailPage() {
       <div className={styles.page}>
         <div className={styles.notFound}>
           <h2>Job Not Found</h2>
-          <p>The job you&apos;re looking for doesn&apos;t exist or has been removed.</p>
-          <Link to="/jobs" className={styles.backLink}>&larr; Back to Jobs</Link>
+          <p>
+            The job you&apos;re looking for doesn&apos;t exist or has been
+            removed.
+          </p>
+          <Link to="/jobs" className={styles.backLink}>
+            &larr; Back to Jobs
+          </Link>
         </div>
       </div>
     );
   }
 
   const skills = job.skills
-    ? job.skills.split(",").map((s) => s.trim()).filter(Boolean)
+    ? job.skills
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
     : [];
 
   const canApply = user?.role === "applicant";
@@ -85,7 +125,16 @@ export default function JobDetailPage() {
   return (
     <div className={styles.page}>
       <button className={styles.backBtn} onClick={() => navigate("/jobs")}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <line x1="19" y1="12" x2="5" y2="12" />
           <polyline points="12 19 5 12 12 5" />
         </svg>
@@ -108,7 +157,16 @@ export default function JobDetailPage() {
             <div className={styles.quickInfo}>
               {job.location && (
                 <span className={styles.infoChip}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
@@ -117,22 +175,39 @@ export default function JobDetailPage() {
               )}
               {job.salaryMin && (
                 <span className={styles.infoChip}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <line x1="12" y1="1" x2="12" y2="23" />
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                   </svg>
                   ${Number(job.salaryMin).toLocaleString()}
-                  {job.salaryMax ? ` - $${Number(job.salaryMax).toLocaleString()}` : "+"}
+                  {job.salaryMax
+                    ? ` - $${Number(job.salaryMax).toLocaleString()}`
+                    : "+"}
                 </span>
               )}
               {job.type && (
-                <span className={styles.infoChip}>{TYPE_LABELS[job.type] || job.type}</span>
+                <span className={styles.infoChip}>
+                  {TYPE_LABELS[job.type] || job.type}
+                </span>
               )}
               {job.duration && (
-                <span className={styles.infoChip}>{DURATION_LABELS[job.duration] || job.duration}</span>
+                <span className={styles.infoChip}>
+                  {DURATION_LABELS[job.duration] || job.duration}
+                </span>
               )}
               {job.experience && (
-                <span className={styles.infoChip}>{EXP_LABELS[job.experience] || job.experience}</span>
+                <span className={styles.infoChip}>
+                  {formatExperience(job.experience)}
+                </span>
               )}
               {job.department && (
                 <span className={styles.infoChip}>{job.department}</span>
@@ -142,7 +217,11 @@ export default function JobDetailPage() {
             <p className={styles.postedDate}>
               Posted {relativeDate(job.createdAt)}
               {job.applicantsCount > 0 && (
-                <> &middot; {job.applicantsCount} applicant{job.applicantsCount === 1 ? "" : "s"}</>
+                <>
+                  {" "}
+                  &middot; {job.applicantsCount} applicant
+                  {job.applicantsCount === 1 ? "" : "s"}
+                </>
               )}
             </p>
           </div>
@@ -152,7 +231,9 @@ export default function JobDetailPage() {
               <h3 className={styles.sectionTitle}>Skills Required</h3>
               <div className={styles.skillsList}>
                 {skills.map((skill) => (
-                  <span key={skill} className={styles.skillTag}>{skill}</span>
+                  <span key={skill} className={styles.skillTag}>
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>

@@ -51,9 +51,9 @@ export function AuthProvider({ children }) {
     return data;
   }
 
-  async function signIn({ email, password }) {
+  async function signIn({ email, username, password }) {
     setAuthError(null);
-    const data = await api.post("/auth/login", { email, password });
+    const data = await api.post("/auth/login", { email, username, password });
     if (data.session) setSession(data.session);
     if (data.user) setUser(data.user);
     return data;

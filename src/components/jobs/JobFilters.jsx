@@ -48,7 +48,7 @@ export default function JobFilters({ filters, onFilterChange, onClear }) {
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>{cat.name}</option>
+            <option key={cat.id} value={cat.id}>{cat.title}</option>
           ))}
         </select>
       </div>

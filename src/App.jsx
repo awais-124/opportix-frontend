@@ -16,6 +16,7 @@ import MyApplicationsPage from "./pages/MyApplicationsPage.jsx";
 import EmployerDashboardPage from "./pages/EmployerDashboardPage.jsx";
 import PostJobPage from "./pages/PostJobPage.jsx";
 import ManageJobsPage from "./pages/ManageJobsPage.jsx";
+import AdminLoginPage from "./pages/AdminLoginPage.jsx";
 
 import AuthLayout from "./components/layout/AuthLayout.jsx";
 import AppLayout from "./components/layout/AppLayout.jsx";
@@ -51,6 +52,7 @@ export default function App() {
             </PublicRoute>
           }
         />
+        <Route path="/admin-login" element={<PublicRoute><AdminLoginPage /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><SignupPage /></PublicRoute>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />

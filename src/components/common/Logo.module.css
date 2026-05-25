@@ -1,0 +1,51 @@
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--font);
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+  /* background-color: black; */
+}
+
+.logoContainer:hover {
+  opacity: 0.85;
+}
+
+.logoImg {
+  display: block;
+  object-fit: contain;
+}
+
+.logoText {
+  font-weight: 800;
+  background: linear-gradient(135deg, #3f72af 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Sizes */
+.small .logoImg {
+  height: 30px;
+}
+.small .logoText {
+  font-size: 18px;
+}
+
+.medium .logoImg {
+  height: 38px;
+}
+.medium .logoText {
+  font-size: 22px;
+}
+
+.large .logoImg {
+  height: 48px;
+}
+.large .logoText {
+  font-size: 28px;
+}

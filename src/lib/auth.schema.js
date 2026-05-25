@@ -11,6 +11,16 @@ export const loginSchema = z.object({
     .min(1, "Password is required"),
 });
 
+export const adminLoginSchema = z.object({
+  username: z
+    .string()
+    .min(1, "Username is required")
+    .max(50, "Username is too long"),
+  password: z
+    .string()
+    .min(1, "Password is required"),
+});
+
 export const signupSchema = z
   .object({
     firstName: z

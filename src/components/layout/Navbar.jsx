@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import Logo from "../common/Logo.jsx";
 import styles from "./Navbar.module.css";
 
 const NAV_LINKS = [
@@ -33,24 +34,28 @@ export default function Navbar() {
     navigate("/auth");
   };
 
-  const roleLabel = user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "";
+  const roleLabel = user?.role
+    ? user.role.charAt(0).toUpperCase() + user.role.slice(1)
+    : "";
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Link to="/" className={styles.logo}>
-          <img src="/assets/logos/logo.png" alt="nav-logo" className={styles.logoImg} />
-        </Link>
+        <Logo size="large" />
 
         <button
           className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ""}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation menu"
         >
-          <span /><span /><span />
+          <span />
+          <span />
+          <span />
         </button>
 
-        <div className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}>
+        <div
+          className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}
+        >
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.to}
@@ -74,8 +79,12 @@ export default function Navbar() {
         <div className={styles.userSection}>
           {loading ? null : !user ? (
             <div className={styles.authButtons}>
-              <Link to="/auth" className={styles.signInBtn}>Sign In</Link>
-              <Link to="/auth" className={styles.signUpBtn}>Sign Up</Link>
+              <Link to="/auth" className={styles.signInBtn}>
+                Sign In
+              </Link>
+              <Link to="/auth" className={styles.signUpBtn}>
+                Sign Up
+              </Link>
             </div>
           ) : (
             <div className={styles.userMenu} ref={dropdownRef}>
@@ -87,7 +96,11 @@ export default function Navbar() {
                   {user.fullname?.charAt(0)?.toUpperCase() || "U"}
                 </span>
                 <span className={styles.userName}>{user.fullname}</span>
-                <span className={`${styles.chevron} ${dropdownOpen ? styles.chevronUp : ""}`}>▾</span>
+                <span
+                  className={`${styles.chevron} ${dropdownOpen ? styles.chevronUp : ""}`}
+                >
+                  ▾
+                </span>
               </button>
 
               {dropdownOpen && (
@@ -140,7 +153,9 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {menuOpen && <div className={styles.overlay} onClick={() => setMenuOpen(false)} />}
+      {menuOpen && (
+        <div className={styles.overlay} onClick={() => setMenuOpen(false)} />
+      )}
     </header>
   );
 }

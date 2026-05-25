@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "../common/Logo.jsx";
 import styles from "./Footer.module.css";
 
 const QUICK_LINKS = [
@@ -22,7 +23,7 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.grid}>
           <div className={styles.brand}>
-            <Link to="/" className={styles.logo}>Opportix</Link>
+            <Logo size="medium" />
             <p className={styles.description}>
               Connecting talented professionals with their dream careers. Your journey starts here.
             </p>

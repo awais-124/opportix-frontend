@@ -1,25 +1,31 @@
 import { Link } from "react-router-dom";
 import styles from "./JobCard.module.css";
+import {
+  EXP_LABELS,
+  DURATION_LABELS,
+  TYPE_LABELS as TYPE_STYLES,
+  formatExperience,
+} from "../../pages/JobDetailPage.jsx";
 
-const TYPE_STYLES = {
-  remote: { class: styles.typeRemote, label: "Remote" },
-  onsite: { class: styles.typeOnsite, label: "On-site" },
-  hybrid: { class: styles.typeHybrid, label: "Hybrid" },
-};
+// const TYPE_STYLES = {
+//   remote: { class: styles.typeRemote, label: "Remote" },
+//   onsite: { class: styles.typeOnsite, label: "On-site" },
+//   hybrid: { class: styles.typeHybrid, label: "Hybrid" },
+// };
 
-const DURATION_LABELS = {
-  "full-time": "Full-time",
-  "part-time": "Part-time",
-  contract: "Contract",
-  internship: "Internship",
-};
+// const DURATION_LABELS = {
+//   "full-time": "Full-time",
+//   "part-time": "Part-time",
+//   contract: "Contract",
+//   internship: "Internship",
+// };
 
-const EXP_LABELS = {
-  entry: "Entry",
-  mid: "Mid-level",
-  senior: "Senior",
-  expert: "Expert",
-};
+// const EXP_LABELS = {
+//   entry: "Entry",
+//   mid: "Mid-level",
+//   senior: "Senior",
+//   expert: "Expert",
+// };
 
 export default function JobCard({ job }) {
   const typeStyle = TYPE_STYLES[job.type] || {};
@@ -31,7 +37,10 @@ export default function JobCard({ job }) {
         : null;
 
   const skills = job.skills
-    ? job.skills.split(",").map((s) => s.trim()).filter(Boolean)
+    ? job.skills
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
     : [];
 
   const logoLetter = job.companyName?.charAt(0).toUpperCase() || "J";
@@ -51,7 +60,16 @@ export default function JobCard({ job }) {
       <div className={styles.meta}>
         {job.location && (
           <span className={styles.metaItem}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
@@ -64,7 +82,9 @@ export default function JobCard({ job }) {
 
       <div className={styles.badges}>
         {typeStyle.class && (
-          <span className={`${styles.badge} ${typeStyle.class}`}>{typeStyle.label}</span>
+          <span className={`${styles.badge} ${typeStyle.class}`}>
+            {typeStyle.label}
+          </span>
         )}
         {job.duration && (
           <span className={`${styles.badge} ${styles.durationBadge}`}>
@@ -73,7 +93,7 @@ export default function JobCard({ job }) {
         )}
         {job.experience && (
           <span className={`${styles.badge} ${styles.expBadge}`}>
-            {EXP_LABELS[job.experience] || job.experience}
+            {formatExperience(job.experience)}
           </span>
         )}
       </div>
@@ -81,7 +101,9 @@ export default function JobCard({ job }) {
       {skills.length > 0 && (
         <div className={styles.skills}>
           {skills.slice(0, 3).map((skill) => (
-            <span key={skill} className={styles.skillTag}>{skill}</span>
+            <span key={skill} className={styles.skillTag}>
+              {skill}
+            </span>
           ))}
           {skills.length > 3 && (
             <span className={styles.skillTag}>+{skills.length - 3}</span>
