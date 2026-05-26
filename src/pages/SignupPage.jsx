@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { signupSchema } from "../lib/auth.schema.js";
 import { ApiError } from "../lib/api.js";
 import Logo from "../components/common/Logo.jsx";
+import Toast from "../components/common/Toast.jsx";
 
 const slides = [
   {
@@ -108,7 +109,9 @@ export default function SignupPage() {
               ? "This email is already registered."
               : err.details?.username
                 ? "This username is already taken."
-                : err.message
+                : err.message === "Unique constraint violation"
+                  ? "This email or username is already registered."
+                  : err.message
           );
         } else {
           setServerError(err.message || "Something went wrong.");
@@ -153,6 +156,14 @@ export default function SignupPage() {
 
   return (
     <div className="register-page">
+      {serverError && (
+        <Toast
+          message={serverError}
+          type="error"
+          onClose={() => setServerError("")}
+        />
+      )}
+
       {/* Left Section (Form Area) */}
       <div className="register-left-col bg-grid-pattern">
         {/* Header Bar */}
@@ -258,12 +269,7 @@ export default function SignupPage() {
                 Enter your credentials to set up your Opportix account.
               </p>
 
-              {serverError && (
-                <div className="register-alert-error">
-                  <strong>Please fix the following:</strong>
-                  <p>{serverError}</p>
-                </div>
-              )}
+
 
               <div className="signup-fields-grid">
                 <div className="signup-input-group">

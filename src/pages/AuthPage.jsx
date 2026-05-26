@@ -7,6 +7,7 @@ import { loginSchema } from "../lib/auth.schema.js";
 import { ApiError } from "../lib/api.js";
 import PasswordField from "../components/auth/PasswordField.jsx";
 import Logo from "../components/common/Logo.jsx";
+import Toast from "../components/common/Toast.jsx";
 
 export default function AuthPage() {
   const { signIn, user, loading: authLoading } = useAuth();
@@ -51,6 +52,14 @@ export default function AuthPage() {
 
   return (
     <div className="auth-page">
+      {serverError && (
+        <Toast
+          message={serverError}
+          type="error"
+          onClose={() => setServerError("")}
+        />
+      )}
+
       {/* Left Section (Brand Promo Panel) */}
       <div className="auth-left-col">
         <div className="auth-brand-wrapper">
@@ -141,8 +150,6 @@ export default function AuthPage() {
                     <Link to="/forgot-password">Forgot password?</Link>
                   </div>
                 </div>
-
-                {serverError && <div className="form-alert-error">{serverError}</div>}
 
                 <button type="submit" className="btn-indigo-submit" disabled={submitting} style={{ marginTop: "8px" }}>
                   {submitting ? "Please wait..." : "Sign In"}
