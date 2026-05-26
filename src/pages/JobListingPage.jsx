@@ -6,8 +6,6 @@ import JobFilters from "../components/jobs/JobFilters.jsx";
 import JobSkeleton from "../components/jobs/JobSkeleton.jsx";
 import styles from "./JobListingPage.module.css";
 
-const LIMIT = 20;
-
 export default function JobListingPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [jobs, setJobs] = useState([]);
@@ -16,8 +14,9 @@ export default function JobListingPage() {
   const [error, setError] = useState(false);
   const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
 
+  const limit = Math.max(1, parseInt(searchParams.get("limit") || "25", 10));
   const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
-  const totalPages = Math.max(1, Math.ceil(total / LIMIT));
+  const totalPages = Math.max(1, Math.ceil(total / limit));
 
   const filters = {
     category: searchParams.get("category") || "",
@@ -63,7 +62,7 @@ export default function JobListingPage() {
 
     const params = new URLSearchParams(searchParams);
     if (!params.has("page")) params.set("page", "1");
-    params.set("limit", String(LIMIT));
+    params.set("limit", String(limit));
     params.set("status", "active");
 
     api
@@ -75,7 +74,7 @@ export default function JobListingPage() {
       })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
-  }, [searchParams]);
+  }, [searchParams, limit]);
 
   const hasActiveFilters = Object.values(filters).some((v) => v);
   const showEmpty = !loading && !error && jobs.length === 0;
@@ -90,6 +89,20 @@ export default function JobListingPage() {
               ? "Searching..."
               : `${total} job${total === 1 ? "" : "s"} found`}
           </p>
+        </div>
+        <div className={styles.limitControl}>
+          <label htmlFor="limit-select" className={styles.limitLabel}>Jobs per page:</label>
+          <select
+            id="limit-select"
+            className={styles.limitSelect}
+            value={limit}
+            onChange={(e) => setFilter("limit", e.target.value)}
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
         </div>
       </div>
 

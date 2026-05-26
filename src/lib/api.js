@@ -1,10 +1,14 @@
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
+const API_URL =
+  "https://opportix-backend.vercel.app" || import.meta.env.VITE_API_URL;
+
+console.log("using URL ===> ", API_URL);
 function requireUrl() {
   if (!API_URL) {
     throw new Error(
       "VITE_API_URL environment variable is not set. " +
-      "Locally, add it to frontend/.env. On Vercel, set it in project settings."
+        "Locally, add it to frontend/.env. On Vercel, set it in project settings.",
     );
   }
   return API_URL;
@@ -50,11 +54,11 @@ class ApiClient {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new ApiError(
-        data.error?.message || `Request failed with status ${response.status}`,
-        response.status,
-        data.error?.details
-      );
+      const errorMessage =
+        data.error?.message ||
+        (typeof data.error === "string" ? data.error : null) ||
+        `Request failed with status ${response.status}`;
+      throw new ApiError(errorMessage, response.status, data.error?.details);
     }
 
     return data.data !== undefined ? data.data : data;
